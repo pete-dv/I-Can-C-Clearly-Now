@@ -1,2 +1,2 @@
-# ICanCClearlyNow
-Repository of Notes for Introduction to C Programming
+![Logo](https://i.imgur.com/lyQSuYh.png)
+

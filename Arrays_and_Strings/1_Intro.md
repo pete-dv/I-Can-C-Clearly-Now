@@ -3,7 +3,7 @@
 # Arrays and Strings - Intro
 
 Arrays are a way for us to **allocate** a block of contiguous (sequential) memory on the **stack** that is able to contain the amount of data that we ask for.
-#
+
 > ## **Allocation**
 > Allocation is the word we often use to when we ask C (or rather, when C asks the operating System) to reserve memory for us. This happens every time we create a variable and a different amount of memory is allocated depending on what data type we're using.
 We'll see an example of what this looks like in a moment.

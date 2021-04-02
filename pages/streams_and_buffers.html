@@ -39,7 +39,7 @@
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="../index.html">Home</a></li>
 							<li><a href="intro_to_memory.html">Intro to Memory</a></li>
 							<li><a href="arrays.html">Arrays</a></li>
 							<li><a href="strings.html">Strings</a></li>
@@ -54,6 +54,7 @@
 					<div id="main">
 						<div class="inner">
 							<h1>Streams and Buffers</h1>
+							<p><b>On this page:</b><a href="#fix"> How Do We Fix It?</a>, <a href="#gets">A Brief Word on gets()</a></p>
 							<span class="image main"><img src="../images/stream_h.jpg" alt="" /></span>
 							<p>Streams are essentially sequences of data and are often equated with entities that control a programs input and ouput. In C we come across streams in a few forms but they all effectively function in the same way.<br>
 								The streams we're most familiar with are stdin (standard input) and stdout (standard output). These are the streams we interact with when using scanf() and printf(). A similar stream that we can access is called stderr (standard error) which is the default stream for error messages, however, these tend to be routed to the same location as stdout.</p>
@@ -100,7 +101,7 @@ int main() {
 							<div class="align-center"><a href="../images/Streams/Streams4.png" target="_blank"><img class="auto-img" src="../images/Streams/Streams4.png"></a></div>
 							<p>It is this problem that can make <code>scanf()</code> (and similar functions) tricky to work with when we're not 100% sure of what the input is going to be. If the user inputs only one character in the first step there wouldn't be any problems, however, we often cannot assume that a user or a file is going to provide the exact data that we're expecting.</p>
 							<hr>
-							<h2>How Do We Fix It?</h2>
+							<h2 id="fix">How Do We Fix It?</h2>
 							<p>Short answer, <b>we need to clear the buffer before we ask for new input</b>. Long answer, it's actually not that difficult. There are a few ways to go about it but let's take a look at two possibilities.</p>
 							<h3>getc() and getchar()</h3>
 							<p><code>getc()</code> is a handy function which consumes then returns the next character in the buffer. Likewise, <code>getchar()</code> works exactly the same but only interacts with the <b>stdin</b> stream. Let's pick up from where our program was last. The characters 'cdefghij\n' are still in the buffer and we need to clear it before we can get new data.</p>
@@ -142,7 +143,7 @@ char c;
 sscanf(string, "%c", c);</code>
 							</pre>
 							<p>The benefit of this is that our input buffer is likely to be clear thanks to <code>fgets()</code> (though it's still not guranteed. See below for more info) and we can now do whatever we like with the string variable without it messing up read functions later in our program, like we saw earlier.</p>
-							<h3>A Brief Word on gets(), And Why Not To Use It</h3>
+							<h3 id="gets">A Brief Word on gets(), And Why Not To Use It</h3>
 							<p>The gets() function has proved very problematic for the C language in the past due to the way that it reads input. gets() will continue reading until it finds a \n character. This more or less is what we implemented above with the getchar() function, and in that circumstance it would work fine. However, if you were to use gets() to read a string into a char array, there is no guarantee that the string will contain the \n before the char array is filled (there's no guarantee that there will be a \n character at all!). This can result in a buffer overflow and can be hugely damaging to your program's operation and security. In more recent version of the C standard, the gets() function has been deprecated in favour of fgets(). The difference being that you can specify a maximum read length, meaning that is it much easier to control how much data is being stored in our char array, and stop any possible overflow.</p>
 							<p>You may be wondering, 'If we can stop reading the buffer after a set length, and possibly before we've come across a \n character, aren't we still in the position where the the may be data left in the buffer?' The answer is yes. In which case we could pull from the buffer again using fgets(), or we could use the getc() method from earlier to clear the buffer.</p>
 							<p>You may have noticed that scanf() doesn't sound that much different to gets() in that there is no guarantee of safe input when using the function. This is a fact of functions that rely on stdin, because it is very easy to take unreliable data from the stream. Programmers are often cautioned from relying on scanf() too much, where an alternative solution may be to use fgets() combined with sscanf() for simpler error checking and recovery. For more info check out this Q&A: <a href="http://c-faq.com/stdio/scanfprobs.html">Why not scanf()? What else?</a></p>

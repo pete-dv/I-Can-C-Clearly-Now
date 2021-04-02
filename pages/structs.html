@@ -39,7 +39,7 @@
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="../index.html">Home</a></li>
 							<li><a href="intro_to_memory.html">Intro to Memory</a></li>
 							<li><a href="arrays.html">Arrays</a></li>
 							<li><a href="strings.html">Strings</a></li>
@@ -54,6 +54,7 @@
 					<div id="main">
 						<div class="inner">
 							<h1>Structs</h1>
+							<p><b>On this page: </b><a href="#accessors">Accessors</a>, <a href="#functions">Structs and Functions</a>, <a href="#good">Good Practices</a>, <a href="#typedef">Typedef</a></p>
 							<span class="image main"><img src="../images/structs_h.jpg" alt="" /></span>
 							<p>
 								So far we have been able to create individual variables and arrays that contain multiples of the same type of variable.
@@ -104,7 +105,7 @@ int main() {
 								keyword to let the compiler know what's going on. That is, unless we use the <code>typedef</code> keyword, which I will cover in a moment.
 							</p>
 
-							<h3>Accessors</h3>
+							<h3 id="accessors">Accessors</h3>
 							<p>
 								Once we've created our struct we need to be able to get access to those variables inside of it. 
 								To do this we use a special symbol called an accessor. In most languages the accessor is represented by the <code>.</code> character and this true of C. 
@@ -146,7 +147,7 @@ var2.x = 10.0;</code>
 p_var->x = 10.0;</code>
 							</pre>
 							<p>There is no particularly good reason for this apart from making it obvious that we're working with a pointer. Otherwise it's just a layer of confusion on top of structs.</p>
-							<h3>Structs and Functions</h3>
+							<h3 id="functions">Structs and Functions</h3>
 							<p>Here is what it might look like to pass the Vector3 struct into a function:</p>
 							<pre>
 								<code>void printVector(struct Vector3 v) {
@@ -165,12 +166,12 @@ p_var->x = 10.0;</code>
 								It's worth noting that a struct containing an array, when passed by value, will copy the array rather than the reference. 
 								This is different to what typically happens with arrays.
 							</p>
-							<h2>Good Practices</h2>
+							<h2 id="good">Good Practices</h2>
 							<ul>
 								<li>Structs are really great for grouping data together that is used for a common process. In my examples above, a Vector3 is common in game engines to keeping track of an object's x, y and z position in space. Grouping them with a struct makes it much easier to keep track of them, especially when we're dealing with a lot of data.</li>
 								<li>It's often a good idea to define your structs in a header file so that each file that has that header is aware of what the struct should look like. (This will make more sense when we get to header files.)</li>
 							</ul>
-							<h1>Typdef</h1>
+							<h1 id="typedef">Typdef</h1>
 							<p>
 								You may be wondering why I haven't used the <code>typedef</code> keyword yet, and why I've used the <code>struct</code> keyword more frequently that what we see in our lecture and lab material. 
 								That is because I wanted to demonstrate what the typedef keyword is actually doing for us.

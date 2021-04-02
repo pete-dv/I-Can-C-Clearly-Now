@@ -39,7 +39,7 @@
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="../index.html">Home</a></li>
 							<li><a href="intro_to_memory.html">Intro to Memory</a></li>
 							<li><a href="strings.html">Strings</a></li>
 							<li><a href="structs.html">Structures</a></li>
@@ -52,6 +52,7 @@
 					<div id="main">
 						<div class="inner">
 							<h1>Arrays</h1>
+							<p><b>On this page:</b><a href="#good"> Good Practices</a></p>
 							<span class="image main"><img src="../images/arrays_header.jpg" alt="" /></span>
 							<p>Arrays are a way for us to allocate a block of contiguous (sequential) memory on the stack that is able to contain the amount of data that we ask for.</p>
 							<p>It's worth pointing out that in C arrays are not first-class citizens (such as char, int, pointers) like in many other programming languages. Arrays are just a layer of convenience for the programmer to work with lots of data quickly. In the Intro I talked a lot about memory and not much about arrays. That is because understanding how memory works is truly fundamental to understanding how C works, especially when we get to pointers.<br>
@@ -101,7 +102,7 @@
 								<li>Return a pointer to first element of our array.</li>
 							</ul>
 
-							<h2>Good Practices</h2>
+							<h2 id="good">Good Practices</h2>
 							<ul>
 								<li>Because arrays in C are glorified pointers the infomation they contain are the memory address of the first element and the type of the array. The array has no idea how big it is so when we're passing an array into a function so it is often a good idea to <b>pass the size of the array</b> into a function along with the array.</li>
 								<li>Use the <code>const</code> keyword (short of constant) to indicate that an array, or any variable for that matter, will not be changed. This is especially useful in functions when we don't what to accidently modify an array. It doesn't actually change anything but it helps the compiler catch our mistakes which is always handy!</li>

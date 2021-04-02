@@ -39,9 +39,9 @@
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="../index.html">Home</a></li>
 							<li><a href="intro_to_memory.html">Intro to Memory</a></li>
-							<li><a href="array.html">Arrays</a></li>
+							<li><a href="arrays.html">Arrays</a></li>
 							<li><a href="structs.html">Structures</a></li>
 							<li><a href="files.html">Files</a></li>
 							<li><a href="streams_and_buffers.html">Streams and Buffers</a></li>
@@ -54,6 +54,7 @@
 					<div id="main">
 						<div class="inner">
 							<h1>Files</h1>
+							<p><b>On This Page:</b> <a href="#functions">Functions</a>, <a href="#file">FILE*</a>, <a href="#paths">Paths</a></p>
 							<span class="image main"><img src="../images/files_h.jpg" alt="" /></span>
 							<p>
 								Being able to access, read, and write files is a handy feature of any programming language. 
@@ -70,7 +71,164 @@
 							</p>
 							<p>Download the files.c source file to see how we might write a simple program to access files</p>
 							<a href="../programs/files.c" class="button primary icon solid fa-download" download="Files.c">Files.c</a>
+							<br>
+							<br>
+							<h3 style="margin-left: 20px;">Side Note</h3>
+							<p style="margin-left: 20px;">
+								In order for the gcc compiler to understand our .c files it first needs to go through a step called Lexical Analysis (Lexing) 
+								which creates tokens that represent parts of our code (sometimes this is called a Lexer or a Tokenizer).
+								After the Lexical Analysis, the newly generated tokens go through a Parser which actually tries to comprehend what the code is doing. 
+								Once it has gone through both of these steps the compiler is able to start turning our program from text into a binary file. It's pretty complicated!
+							</p>
+							<p>
+								There are few ways in which C can interact with files on your computer and they come from our trusty <code>stdio.h</code> header file.
+							</p>
 
+							<hr>
+							<h2 id="functions">Functions</h2>
+							<ul>
+								<li>
+									<h3>fopen</h3>
+									<p>
+										<code>FILE *fopen(const char *filename, const char *mode)</code><br>
+										fopen() returns a FILE pointer (This will be covered in the FILE* section below). It also takes a number of <code>const char *</code> arguments. 
+										When we come across <code>const char *</code> we can often assume that it's looking for a string.
+									</p>
+									<h4>Parameters</h4>
+									<ul style="list-style-type: square;">
+										<li><code>filename</code>: Path to a file (relative or absolute). e.g. "C:\User\file.txt"</li>
+										<li><code>mode</code>: This parameter is expecting a few special strings:</li>
+										<ul>
+											<li><code>"r"</code>: open a file for reading</li>
+											<li><code>"w"</code>: create a file for writing, discarding any previous content</li>
+											<li><code>"a"</code>: open a file for appending, starting at the end of the file (similar to "w" but doesn't delete the contents of the file)</li>
+											<li><code>"r+"</code>: opens a file for reading and updating</li>
+											<li><code>"b"</code>: Indicates the file is binary</li>
+										</ul>
+									</ul>
+									<p>These modes can be combined in various ways to achieve different results, e.g. "rb" is read a binary file.</p>
+								</li>
+								<hr>
+								<li>
+									<h3>fclose</h3>
+									<p>
+										<code>int fclose(FILE *stream)</code><br>
+										fclose() closes a file and discards the remainder of the stream. Returns 0 if successful otherwise returns an <code>EOF</code>.
+									</p>
+									<h4>Parameters</h4>
+									<ul style="list-style-type: square;">
+										<li><code>stream</code>: The FILE pointer previously returned by the fopen() function.</li>
+									</ul>
+								</li>
+								<hr>
+								<li>
+									<h3>fscanf</h3>
+									<p>
+										<code>int fscanf(FILE *stream, const char *format, ...)</code><br>
+										The largely works very similarly to the <code>scanf()</code> function we're already familiar with but you are required to 
+										indicate which file you plan to read from using the <code>*stream</code> argument.
+									</p>
+									<h4>Parameters</h4>
+									<ul style="list-style-type: square;">
+										<li><code>stream</code>: The FILE pointer previously returned by the fopen() function.</li>
+										<li><code>format</code>: This is the %d, %lf part, just like scanf().</li>
+										<li><code>...</code>: This is where you put the &variables to store the information that fscanf() has gathered, just like scanf().</li>
+									</ul>
+								</li>
+								<hr>
+								<li>
+									<h3>fprintf</h3>
+									<p>
+										<code>int fprintf(FILE *stream, const char *format, ...)</code><br>
+										Just like printf() but you need to specify the stream (in this case, probably file) that you'd like to read from. 
+										The return value is the number of characters written or a negative if it fails.
+									</p>
+									<h4>Parameters</h4>
+									<ul style="list-style-type: square;">
+										<li><code>stream</code>: The FILE pointer previously returned by the fopen() function.</li>
+										<li><code>format</code>: This is the %d, %lf part, just like printf().</li>
+										<li><code>...</code>: This is where you put the variables to write into the file, similarly to scanf().</li>
+									</ul>
+								</li>
+								<hr>
+								<li>
+									<h3>fclose</h3>
+									<p>
+										<code>int fclose(FILE *stream)</code><br>
+										fclose() closes a file and discards the remainder of the stream. Returns 0 if successful otherwise returns an <code>EOF</code>.
+									</p>
+									<h4>Parameters</h4>
+									<ul style="list-style-type: square;">
+										<li><code>stream</code>: The FILE pointer previously returned by the fopen() function.</li>
+									</ul>
+								</li>
+								<hr>
+								<li>
+									<h3>fgetc</h3>
+									<p>
+										<code>int fgetc(FILE *stream)</code><br>
+										Returns the next character in the stream. Returns <code>EOF</code> if the end of the file is reached or an error occurs.
+									</p>
+									<h4>Parameters</h4>
+									<ul style="list-style-type: square;">
+										<li><code>stream</code>: The FILE pointer previously returned by the fopen() function.</li>
+									</ul>
+								</li>
+								<hr>
+								<li>
+									<h3>fputc</h3>
+									<p>
+										<code>int fputc(int c, FILE *stream)</code><br>
+										Writes the character <code>c</code> (converted to an unsigned char) into the file. Returns an EOF if an error occurs.
+									</p>
+									<h4>Parameters</h4>
+									<ul style="list-style-type: square;">
+										<li><code>c</code>: Character to write</li>
+										<li><code>stream</code>: The FILE pointer previously returned by the fopen() function.</li>
+									</ul>
+								</li>
+								<hr>
+								<li>
+									<h3>fread</h3>
+									<p>
+										<code>size_t fread(void *ptr, size_t size, size_t nobj, FILE *stream)</code><br>
+										There's a lot going on in this function so it's probably best to just ignore this for now but I'll explain it a little.<br>
+										fread() reads from a stream until it reaches the end of the file or has reached <code>nobj</code> and places the data into the <code>ptr</code> array.
+									</p>
+									<h4>Parameters</h4>
+									<ul style="list-style-type: square;">
+										<li><code>ptr</code>: An array represented as void pointer. See <a href="pointers.html">Pointers for more info.</a></li>
+										<li><code>size</code>: The size of the objects that are expected to be read. (Size in bytes)</li>
+										<li><code>nobj</code>: The number of objects of size <code>size</code> to be read before finishing.</li>
+										<li><code>stream</code>: The FILE pointer previously returned by the fopen() function.</li>
+									</ul>
+								</li>
+								<hr>
+							</ul>
+							<hr>
+							<h2 id="file">FILE*</h2>
+							<p>
+								A common theme with my notes so far is that I bring up pointers frequently. That is because pointers are integral to how C works and we have 
+								already been using them in some cases without realising it. <br>
+								Pretty much all of the file functions outlined above make use of or return something called a FILE pointer, represented in C as FILE* or FILE * - (they are the same). <br>
+								A FILE pointer is essentially a memory address that stores the location for the file that we're working on. 
+								The only way to get a FILE pointer is to use the fopen() function which returns a file pointer. 
+								We can store this pointer in our own variable and the pass it around to other functions, such as fgetc() or fprintf(), like any other variable.
+							</p>
+
+							<hr>
+							<h2 id="paths">Relative and Absolute Paths</h2>
+							<p>
+								There are two ways to represent locations of files on computers. That is, a relative path or an absolute path. A relative path starts from wherever your current directory is, or rather, where your C program is being run. <br>
+								An absolute path starts at the root directory of your system and works it's way to the desired file. The root directory depends on your OS but for windows it is generally <code>C:\</code> (or any other partition you currently are in) and in Linux and MacOS it the root is <code>/</code>. <br>
+							</p>
+							<p>
+								When we're using relative paths we also are able to use special characters to indicate our current directory and our parent directory:
+							</p>
+							<ul>
+								<li>Current Directory: <code>"."</code></li>
+								<li>Parent Directory: <code>".."</code></li>
+							</ul>
 						</div>
 					</div>
 

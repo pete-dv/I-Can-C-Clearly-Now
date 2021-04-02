@@ -39,9 +39,9 @@
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="../index.html">Home</a></li>
 							<li><a href="intro_to_memory.html">Intro to Memory</a></li>
-							<li><a href="array.html">Arrays</a></li>
+							<li><a href="arrays.html">Arrays</a></li>
 							<li><a href="structs.html">Structures</a></li>
 							<li><a href="files.html">Files</a></li>
 							<li><a href="streams_and_buffers.html">Streams and Buffers</a></li>
@@ -54,10 +54,11 @@
 					<div id="main">
 						<div class="inner">
 							<h1>Strings</h1>
+							<p><b>On this page: </b><a href="#array">Char Array Strings</a>, <a href="#good">Good Practices</a>, <a href="#literal">String Literals</a>
 							<span class="image main"><img src="../images/strings_h.jpg" alt="" /></span>
 							<p>Much like arrays, strings are not first-class citizens in C. In fact, they inherit most of the issues that come from using arrays because... they're just arrays.<br>
 								That's not entirely true though. <b>There are actually two types of strings in C.</b></p>
-							<h2>1. Char Array Strings</h2>
+							<h2 id="array">1. Char Array Strings</h2>
 							<p>In a lot of ways strings and char arrays are synonymous. The main differentiating feature of a string is that it contains a null-terminator.</p>
 							<div class="align-center"><a href="../images/Arrays/null_terminator0.png"><img class="auto-img" src="../images/Arrays/null_terminator0.png" alt=""></a></div>
 							<p>
@@ -82,12 +83,12 @@
 								Many of the functions found in this file are relatively simple to implement on your own without the need of the string.h header and sometimes it may be a 
 								better idea to create your own version of some of these functions, but otherwise they can be handy to have.
 							</p>
-							<h3>Good Practices</h3>
+							<h3 id="good">Good Practices</h3>
 							<ul>
 								<li>Make sure your string arrays are at least one element larger than the string you're expecting because of the null terminator.</li>
 								<li>Sometimes it might be better to use regular char arrays rather than strings. They each have uses so it's worth thinking about how you're going to use the arrays in your program.</li>
 							</ul>
-							<h2>2. String Literals</h2>
+							<h2 id="literal">2. String Literals</h2>
 							<p>
 								String literals are probably easier to understand that string arrays. A string literal is created pretty much anytime you use the quotation marks. e.g.
 							</p>

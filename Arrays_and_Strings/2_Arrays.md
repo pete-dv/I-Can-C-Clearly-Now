@@ -4,7 +4,7 @@
 
 It's worth pointing out that in C arrays are not first-class citizens (such as char, int, pointers) like in many other programming languages. Arrays are just a layer of convenience for the programmer to work with lots of data quickly. In the Intro I talked a lot about memory and not much about arrays. That is because understanding how memory works is truly fundamental to understanding how C works, especially when we get to pointers.
 Though, when we're using arrays we're actually secretly using pointers so it is equally as important to understand memory now.
-If you read through [Intro](https://replit.com/@Peterde3/ICSCN-Arrays-and-Strings#Markdown/1_Intro.md) you would be familiar with what our memory looks like when using a single variable such as an int. Let's have a quick look at what an **int array with 10 values set to 5** looks like. (**Click on the image to make it bigger.**)
+If you read through [Intro]() you would be familiar with what our memory looks like when using a single variable such as an int. Let's have a quick look at what an **int array with 10 values set to 5** looks like. (**Click on the image to make it bigger.**)
 
 ![int_arr_5](https://imgur.com/QOUyXwI.png)
 We can see starting at memory address 0x00CFF8E8 we have 10 lots of 4 bytes each containing the number 5. This is how arrays look in memory. Pretty neat!

@@ -53,9 +53,24 @@
 						<div class="inner">
 							<h1>Strings</h1>
 							<span class="image main"><img src="../images/strings_h.jpg" alt="" /></span>
-							<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel venenatis mauris vehicula hendrerit.</p>
-							<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+							<p>Much like arrays, strings are not first-class citizens in C. In fact, they inherit most of the issues that come from using arrays because... they're just arrays.<br>
+								That's not entirely true though. <b>There are actually two types of strings in C.</b></p>
+							<h2>1. Char Array Strings</h2>
+							<p>In a lot of ways strings and char arrays are synonymous. The main differentiating feature of a string is that it contains a null-terminator.</p>
+							<div class="align-center"><a href="../images/Arrays/null_terminator0.png"><img src="../images/Arrays/null_terminator0.png" alt=""></a></div>
+							<p>
+								A null-terminator is usually represented by an escaped 0: <code>\0</code>
+								The null-terminator is what let's us know where the end of a string is. Without the null terminator,
+								functions such as printf(), puts(), strcmp(), etc. wouldn't know when to stop reading the character array because we don't have to provide a length to any of those functions.
+								This is a nice convenience because we don't need to know how long a string is all the time, otherwise we might as well just use a char array
+							</p>
+							<p>
+								There are some inherent risks when using strings because of the null-terminator though, 
+								and functions such as <code>gets()</code> have been removed from newer versions of C because it was easy to manipulate the method by not providing a null terminator and potentionally 
+								overwriting memory past the bounds of the char array.
+							</p>
+							<h3>In Action</h3>
+							<p>Download <a href="../programs/getLine.c" download="getLine">readLine.c</a> to see how we could make our own scanf()-like function to read the user input into a string.</p>
 						</div>
 					</div>
 

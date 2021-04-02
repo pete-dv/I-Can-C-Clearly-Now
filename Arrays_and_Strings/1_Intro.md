@@ -21,12 +21,13 @@ The one big caveat with stack memory is that we need to know exactly how much of
 // Conveniently, C also makes these variables fall out of scope so we don't use them and access bad memory.
 ```
 
-#
+
 Let's see how this looks in practice. I think it's worth looking at what is actually happening to our memory to better understand what's actually happening.
 **NOTE: The Visual Studio debugger initalises memory to a default value. This does not happen in non-debug builds like when we use the gcc compiler, though it does make it easier to see what's happening.**
 
 ## Meet the Memory
 ![Memory](https://imgur.com/2vCakjM.png)
+
 This is what the registers in the memory addresses look like. In this case we can see groups of two hexadecimal numbers, each representing 1 byte of memory. Conveniently, the binary values in 8 bits fit into two hex values: 0000 0000 - 1111 1111 == 00 - FF == 0 - 255
 
 Suppose the following declaration of our variable i that is a int type:
@@ -34,11 +35,15 @@ Suppose the following declaration of our variable i that is a int type:
 int i;
 ```
 These are the 4 bytes that has been allocated to use the variable i. You can see that they are all just random values for now. The bytes that aren't underlined are positions in memory that can be used by other variables in our program, though, they are not related to our int variable.
+
 ![int_pre](https://imgur.com/O79yHFo.png)
+
 Let's try assigning a value to i.
 ```
 i = 5;
 ```
+
 ![int_post](https://imgur.com/7OlOwhu.png)
+
 The first byte changed to the number 5 and we can see by the red text that C also set the remaining bytes to 0.
 [**Continue to Arrays**]()

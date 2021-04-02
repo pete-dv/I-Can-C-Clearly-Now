@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Arrays and Strings</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="../width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="../index.html" class="logo">
+									<span class="symbol"><img src="../images/C_logo.png" alt="" /></span><span class="title">Home</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="intro_to_memory.html">Intro to Memory</a></li>
+							<li><a href="arrays.html">Arrays</a></li>
+							<li><a href="generic.html">Strings</a></li>
+							<li><a href="generic.html">Structures</a></li>
+							<li><a href="elements.html">Files</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Streams and Buffers</h1>
+							<span class="image main"><img src="../images/stream_h.jpg" alt="" /></span>
+							<p>Streams are essentially sequences of data and are often equated with entities that control a programs input and ouput. In C we come across streams in a few forms but they all effectively function in the same way.<br>
+								The streams we're most familiar with are stdin (standard input) and stdout (standard output). These are the streams we interact with when using scanf() and printf(). A similar stream that we can access is called stderr (standard error) which is the default stream for error messages, however, these tend to be routed to the same location as stdout.</p>
+							<p>Buffers are often closely linked with the functionality of a stream and sometimes it can be hard to precisely draw the line between one and the other at a first glance. A buffer is essentially a block of memory that holds data coming in from the stream for our program to read. In order to best understand let's look at a simple example with some diagrams.</p>
+								<pre>
+									<code>#include &lt;stdio.h&gt;
+
+int main() {
+  char c;
+  scanf("%c", &c); // User types 'abcdefghij' then hits enter.
+
+  return 0;
+}</code>
+							</pre>
+							<p>Above is a simple program where we use <code>scanf()</code> to read a single character from the stream. In this example the user provides more input than we need. We've only asked for a single character but the user has entered 10 characters to better illustrate how the interaction between a stream, buffer and program.</p>
+							<ol>
+								<li>Firstly, out program reaches the <code>scanf()</code> line and waits until it can read data from the buffer.</li>
+								<li>At this point we can type in data into the console. Because of the way most consoles work, the data is not sent until we press the enter key.</li>
+								<li>When we hit enter, the data from the console is moved into the <code>stdin</code> buffer.</li>
+								<li><code>scanf()</code> reads the data the it needs from the buffer. In this case <code>scanf()</code> is looking for the first non-whitespace character, which in our example is the character 'a'.</li>
+							</ol>
+							<div class="align-center"><a href="../images/Streams/Streams1.png" target="_blank">
+								<img class="auto-img" src="../images/Streams/Streams1.png"></a>
+							</div>
+							<ol start="5">
+								<li>Now we can observe one of the tricks of an input buffer. <code>scanf()</code> consumed a character like we asked it to <b>but has left the remaining data from the stream in the buffer.</b></li>
+							</ol>
+							<p>In the diagram below we can see that the remaining input, 'bcdefghij\n', is still in the buffer and it will stay there until we do something with it.</p>
+							<div class="align-center"><a href="../images/Streams/streams2.png" target="_blank"><img class="auto-img" src="../images/Streams/streams2.png"></a></div>
+							<p>Let's say we change our program slightly:</p>
+							<pre>
+								<code>int main() {
+  char c, d;
+  scanf("%c", &c); // User types 'abcdefghij' then hits enter.
+
+  scanf("%c", &d); // Now we would like to get some new input for our variable 'd'.
+
+  return 0;
+}</code>
+							</pre>
+							<p>The first 5 steps happen as above, then we call <code>scanf()</code> again.</p>
+							<div class="align-center"><a href="../images/Streams/Streams3.png" target="_blank"><img class="auto-img" src="../images/Streams/Streams3.png"></a></div>
+							<p><code>scanf()</code> consumes the next character in the buffer without allowing us to input new data. We're still dealing with the data from the first input that wasn't used.</p>
+							<div class="align-center"><a href="../images/Streams/Streams4.png" target="_blank"><img class="auto-img" src="../images/Streams/Streams4.png"></a></div>
+							<p>It is this problem that can make <code>scanf()</code> (and similar functions) tricky to work with when we're not 100% sure of what the input is going to be. If the user inputs only one character in the first step there wouldn't be any problems, however, we often cannot assume that a user or a file is going to provide the exact data that we're expecting.</p>
+							<hr>
+							<h2>How Do We Fix It?</h2>
+							<p>Short answer, <b>we need to clear the buffer before we ask for new input</b>. Long answer, it's actually not that difficult. There are a few ways to go about it but let's take a look at two possibilities.</p>
+							<h3>getc() and getchar()</h3>
+							<p><code>getc()</code> is a handy function which consumes then returns the next character in the buffer. Likewise, <code>getchar()</code> works exactly the same but only interacts with the <b>stdin</b> stream. Let's pick up from where our program was last. The characters 'cdefghij\n' are still in the buffer and we need to clear it before we can get new data.</p>
+							<pre>
+								<code>  scanf("%c", &d);
+  // At this point 'cdefghij\n' is still in the input buffer.
+
+  while (c = getchar() != '\n');
+  // Now our input buffer is empty
+
+  return 0;
+}</code>
+							</pre>
+							<p>Here we are using <code>getchar()</code> to consume each character one at a time from the buffer. At each iteration of the loop we are comparing the result of <code>getchar()</code> (which is the consumed character) until we find the line-feed <code>\n</code>. We know that the <code>\n</code> is going to be the last character because it is automatically added to our input when we press enter. Once <code>getchar()</code> has consumed all the values the buffer will be empty and we can once again ask for new input.
+								This may seem inefficient but this is a fairly typical way of flushing a buffer in C.</p>
+							<p><code>getchar()</code> and <code>getc()</code> are often implemented as macros in the stdio.h which means they do not incur the overhead cost of a function call. This makes them very fast to execute.</p>
+
+							<h3>fgets()</h3>
+							<p>An alternative method is to read the entire input all at once and handle it all at once. Doing this means that the input buffer is cleared immediately and is able to take the next stream of data. There are two main ways of doing this: the <code>fgets()</code> function, and it's ugly step-sister, <code>gets()</code>. (It's also possible to implement you're own version of gets() and fgets() using getc()/getchar()).
+								We can use <code>fgets()</code> like so:</p>
+							<pre>
+								<code>char string[1000]; // Create a character array which is large enough to store the desired input;
+fgets(string, 999, stdin); // param: (char array, read limit, FILE stream)</code>
+							</pre>
+							<p>Once we have the input stored in the string we can use a special version of scanf() called <code>sscanf()</code> which works very similarly to scanf() except it takes input from a string rather than the stdin.</p>
+							<pre>
+								<code>char string[1000];
+fgets(string, 999, stdin);
+
+char c;
+sscanf(string, "%c", c);</code>
+							</pre>
+							<p>The benefit of this is that our input buffer is likely to be clear thanks to <code>fgets()</code> (though it's still not guranteed. See below for more info) and we can now do whatever we like with the string variable without it messing up read functions later in our program, like we saw earlier.</p>
+							<h3>A Brief Word on gets(), And Why Not To Use It</h3>
+							<p>The gets() function has proved very problematic for the C language in the past due to the way that it reads input. gets() will continue reading until it finds a \n character. This more or less is what we implemented above with the getchar() function, and in that circumstance it would work fine. However, if you were to use gets() to read a string into a char array, there is no guarantee that the string will contain the \n before the char array is filled (there's no guarantee that there will be a \n character at all!). This can result in a buffer overflow and can be hugely damaging to your program's operation and security. In more recent version of the C standard, the gets() function has been deprecated in favour of fgets(). The difference being that you can specify a maximum read length, meaning that is it much easier to control how much data is being stored in our char array, and stop any possible overflow.</p>
+							<p>You may be wondering, 'If we can stop reading the buffer after a set length, and possibly before we've come across a \n character, aren't we still in the position where the the may be data left in the buffer?' The answer is yes. In which case we could pull from the buffer again using fgets(), or we could use the getc() method from earlier to clear the buffer.</p>
+							<p>You may have noticed that scanf() doesn't sound that much different to gets() in that there is no guarantee of safe input when using the function. This is a fact of functions that rely on stdin, because it is very easy to take unreliable data from the stream. Programmers are often cautioned from relying on scanf() too much, where an alternative solution may be to use fgets() combined with sscanf() for simpler error checking and recovery. For more info check out this Q&A: <a href="http://c-faq.com/stdio/scanfprobs.html">Why not scanf()? What else?</a></p>
+
+					</div>
+
+
+
+
+
+				<!-- Footer --> <!--
+					<footer id="footer">
+						<div class="inner">
+							<section>
+								<h2>Get in touch</h2>
+								<form method="post" action="#">
+									<div class="fields">
+										<div class="field half">
+											<input type="text" name="name" id="name" placeholder="Name" />
+										</div>
+										<div class="field half">
+											<input type="email" name="email" id="email" placeholder="Email" />
+										</div>
+										<div class="field">
+											<textarea name="message" id="message" placeholder="Message"></textarea>
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send" class="primary" /></li>
+									</ul>
+								</form>
+							</section>
+							<section>
+								<h2>Follow</h2>
+								<ul class="icons">
+									<li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-500px"><span class="label">500px</span></a></li>
+									<li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
+									<li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+							<ul class="copyright">
+								<li>&copy; Pete-dv. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+				-->
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>

@@ -268,6 +268,7 @@ input, select, textarea {
 
 	code {
 		background: rgba(144, 144, 144, 0.075);
+		color: #f04646;
 		border-radius: 4px;
 		border: solid 1px #c9c9c9;
 		font-family: "Courier New", monospace;
@@ -284,6 +285,7 @@ input, select, textarea {
 	}
 
 		pre code {
+			color: #333333;
 			display: block;
 			line-height: 1.75;
 			padding: 1em 1.5em;
@@ -2737,8 +2739,8 @@ input, select, textarea {
 			}
 
 				body:not(.is-touch) .tiles article:hover > .image:before {
-					background-color: #333333;
-					opacity: 0.35;
+					background-color: #161616;
+					opacity: 0.7;
 				}
 
 				body:not(.is-touch) .tiles article:hover > .image:after {
@@ -3331,5 +3333,8 @@ input, select, textarea {
 
 .header-img {
 	width: 75%;
+}
 
+.auto-img {
+	width: 70%;
 }

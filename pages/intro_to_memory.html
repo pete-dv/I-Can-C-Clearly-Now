@@ -75,7 +75,7 @@
 							</pre>
 							<p>Let's see how this looks in practice. I think it's worth looking at what is actually happening to our memory to better understand what's actually happening.</p>
 							<div class="align-center">
-								<a href="../images/Arrays/Registers.png"><img src="../images/Arrays/Registers.png"></a>
+								<div class="align-center"><a href="../images/Arrays/Registers.png" target="_blank"><img class="auto-img" src="../images/Arrays/Registers.png"></a></div>
 							</div>
 							<p>This is what the registers in the memory addresses look like. In this case we can see groups of two hexadecimal numbers, each representing 1 byte of memory. Conveniently, the binary values in 8 bits fit into two hex values: 0000 0000 - 1111 1111 == 00 - FF == 0 - 255</p>
 							<p>Suppose the following declaration of our variable i that is a int type:</p>
@@ -83,12 +83,12 @@
 								<code>int i;</code>
 							</pre>
 							<p>These are the 4 bytes that has been allocated to use the variable i. You can see that they are all just random values for now. The bytes that aren't underlined are positions in memory that can be used by other variables in our program, though, they are not related to our int variable.</p>
-							<div class="align-center"><a href="../images/Arrays/int_pre.png"><img src="../images/Arrays/int_pre.png"></div></a>
+							<div class="align-center"><a href="../images/Arrays/int_pre.png" target="_blank"><img class="auto-img" src="../images/Arrays/int_pre.png"></div></a>
 							<p>Let's try assigning a value to i.</p>
 							<pre>
 								<code>i = 5;</code>
 							</pre>
-							<div class="align-center"><a href="../images/Arrays/int_post.png"><img src="../images/Arrays/int_post.png"></a></div>
+							<div class="align-center"><a href="../images/Arrays/int_post.png" target="_blank"><img class="auto-img" src="../images/Arrays/int_post.png"></a></div>
 							<p>The first byte changed to the number 5 and we can see by the red text that C also set the remaining bytes to 0.</p>
 							<p>This discussion on memory continues in <a href="arrays.html">Arrays.</a></p>
 					</div>

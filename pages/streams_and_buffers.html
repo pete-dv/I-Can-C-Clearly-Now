@@ -114,12 +114,20 @@ int main() {
   return 0;
 }</code>
 							</pre>
-							<p>Here we are using <code>getchar()</code> to consume each character one at a time from the buffer. At each iteration of the loop we are comparing the result of <code>getchar()</code> (which is the consumed character) until we find the line-feed <code>\n</code>. We know that the <code>\n</code> is going to be the last character because it is automatically added to our input when we press enter. Once <code>getchar()</code> has consumed all the values the buffer will be empty and we can once again ask for new input.
+							<p>Here we are using <code>getchar()</code> to consume each character one at a time from the buffer. 
+								At each iteration of the loop we are comparing the result of <code>getchar()</code> (which is the consumed character) 
+								until we find the line-feed <code>\n</code>. We know that the <code>\n</code> is going to be the last character 
+								because it is automatically added to our input when we press enter. Once <code>getchar()</code> has consumed all 
+								the values, the buffer will be empty and we can once again ask for new input.
 								This may seem inefficient but this is a fairly typical way of flushing a buffer in C.</p>
-							<p><code>getchar()</code> and <code>getc()</code> are often implemented as macros in the stdio.h which means they do not incur the overhead cost of a function call. This makes them very fast to execute.</p>
+							<p><code>getchar()</code> and <code>getc()</code> are often implemented as macros in the stdio.h which means they do 
+								not incur the overhead cost of a function call. This makes them very fast to execute.</p>
 
 							<h3>fgets()</h3>
-							<p>An alternative method is to read the entire input all at once and handle it all at once. Doing this means that the input buffer is cleared immediately and is able to take the next stream of data. There are two main ways of doing this: the <code>fgets()</code> function, and it's ugly step-sister, <code>gets()</code>. (It's also possible to implement you're own version of gets() and fgets() using getc()/getchar()).
+							<p>An alternative method is to read the entire input and handle it all at once. 
+								Doing this means that the input buffer is cleared immediately and is able to take the next stream of data. 
+								There are two main ways of doing this: the <code>fgets()</code> function, and it's ugly step-sister, <code>gets()</code>. 
+								(It's also possible to implement you're own version of gets() and fgets() using getc()/getchar()).
 								We can use <code>fgets()</code> like so:</p>
 							<pre>
 								<code>char string[1000]; // Create a character array which is large enough to store the desired input;

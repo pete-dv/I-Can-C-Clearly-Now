@@ -57,11 +57,11 @@
 							<p>It's worth pointing out that in C arrays are not first-class citizens (such as char, int, pointers) like in many other programming languages. Arrays are just a layer of convenience for the programmer to work with lots of data quickly. In the Intro I talked a lot about memory and not much about arrays. That is because understanding how memory works is truly fundamental to understanding how C works, especially when we get to pointers.<br>
 								Though, when we're using arrays we're actually secretly using pointers so it is equally as important to understand memory now.<br>
 								If you read through <a href="intro_to_memory.html">Intro to Memory</a> you would be familiar with what our memory looks like when using a single variable such as an int. Let's have a quick look at what an int array with 10 values set to 5 looks like.</p>
-							<div class="align-center"><a href="../images/Arrays/int_arr_5.png"><img src="../images/Arrays/int_arr_5.png" alt=""></a></div>
+							<div class="align-center"><a href="../images/Arrays/int_arr_5.png" target="_blank"><img class="auto-img" src="../images/Arrays/int_arr_5.png" alt=""></a></div>
 							<p>We can see starting at memory address 0x00CFF8E8 we have 10 lots of 4 bytes each containing the number 5. This is how arrays look in memory. Pretty neat!</p>
 							<p>It's probably standard knowledge by now but arrays in C are 0-based which means their first element is represented by a 0.<br>
 								<b>It's crucial to remember that when we declare an array of a size the last element is always size - 1</b></p>
-							<div class="align-center"><a href="../images/Arrays/double_arr_diagram.png"><img src="../images/Arrays/double_arr_diagram.png" alt=""></a></div>
+							<div class="align-center"><a href="../images/Arrays/double_arr_diagram.png" target="_blank"><img class="auto-img" src="../images/Arrays/double_arr_diagram.png" alt=""></a></div>
 							
 							<h2>Passing By Reference</h2>
 							By default all of C's primitive types are passed into functions by value. That is, the value is copied into the new parameter variable that is declared in the function. This is great because we can mess around with the variables inside the function without worrying about what we might be changing outside the function.<br>
@@ -86,8 +86,16 @@
   arr[5] = 12;
 }</code>
 							</pre>
-							<p>are practically the same. One takes an array as it's argument and the other takes a pointer but as I mentioned that are effectively the same when we're using arrays so both are fine. The latter is more transparent with what is actually happening but the former makes it easier to see that we're working with an array. Both are fine.</p>
-							<p>Because Arrays are not first-class citizens we cannot return arrays from functions in C. There are two options available to us to basically do the same thing:</p>
+							<p>
+								are practically the same. One takes an array as it's argument and the other takes a pointer but as I 
+								mentioned that are effectively the same when we're using arrays so both are fine. The latter is more 
+								transparent with what is actually happening but the former makes it easier to see that we're working with an array. 
+								Both are fine.
+							</p>
+							<p>
+								Because Arrays are not first-class citizens we cannot return arrays from functions in C. There are two options 
+								available to us to basically do the same thing:
+							</p>
 							<ul>
 								<li>Pass the array into a function and modify the array.</li>
 								<li>Return a pointer to first element of our array.</li>

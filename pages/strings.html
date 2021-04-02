@@ -59,7 +59,7 @@
 								That's not entirely true though. <b>There are actually two types of strings in C.</b></p>
 							<h2>1. Char Array Strings</h2>
 							<p>In a lot of ways strings and char arrays are synonymous. The main differentiating feature of a string is that it contains a null-terminator.</p>
-							<div class="align-center"><a href="../images/Arrays/null_terminator0.png"><img src="../images/Arrays/null_terminator0.png" alt=""></a></div>
+							<div class="align-center"><a href="../images/Arrays/null_terminator0.png"><img class="auto-img" src="../images/Arrays/null_terminator0.png" alt=""></a></div>
 							<p>
 								A null-terminator is usually represented by an escaped 0: <code>\0</code><br>
 								The null-terminator is what let's us know where the end of a string is. Without the null terminator,
@@ -72,7 +72,10 @@
 								overwriting memory past the bounds of the char array.
 							</p>
 							<h4>In Action</h4>
-							<p>Download <a href="../programs/getLine.c" download="getLine.c">readLine.c</a> to see how we could make our own scanf()-like function to read the user input into a string.</p>
+							<p>Download the getLine.c program to see how we could make our own scanf()-like function to read the user input into a string.</p>
+							<a href="../programs/getLine.c" class="button primary icon solid fa-download" download="getLine.c">getLine.c</a>
+							<br>
+							<br>
 							<h4>String.h</h4>
 							<p>
 								The C standard library comes with a string library with some handy functions such as <code>strcmp()</code>, and <code>strlen()</code>. 

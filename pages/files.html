@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Arrays and Strings</title>
+		<title>Files</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="../width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../assets/css/main.css" />
@@ -53,48 +53,9 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<h1>Strings</h1>
-							<span class="image main"><img src="../images/strings_h.jpg" alt="" /></span>
-							<p>Much like arrays, strings are not first-class citizens in C. In fact, they inherit most of the issues that come from using arrays because... they're just arrays.<br>
-								That's not entirely true though. <b>There are actually two types of strings in C.</b></p>
-							<h2>1. Char Array Strings</h2>
-							<p>In a lot of ways strings and char arrays are synonymous. The main differentiating feature of a string is that it contains a null-terminator.</p>
-							<div class="align-center"><a href="../images/Arrays/null_terminator0.png"><img src="../images/Arrays/null_terminator0.png" alt=""></a></div>
-							<p>
-								A null-terminator is usually represented by an escaped 0: <code>\0</code><br>
-								The null-terminator is what let's us know where the end of a string is. Without the null terminator,
-								functions such as printf(), puts(), strcmp(), etc. wouldn't know when to stop reading the character array because we don't have to provide a length to any of those functions.
-								This is a nice convenience because we don't need to know how long a string is all the time, otherwise we might as well just use a char array
-							</p>
-							<p>
-								There are some inherent risks when using strings because of the null-terminator though, 
-								and functions such as <code>gets()</code> have been removed from newer versions of C because it was easy to manipulate the method by not providing a null terminator and potentionally 
-								overwriting memory past the bounds of the char array.
-							</p>
-							<h4>In Action</h4>
-							<p>Download <a href="../programs/getLine.c" download="getLine.c">readLine.c</a> to see how we could make our own scanf()-like function to read the user input into a string.</p>
-							<h4>String.h</h4>
-							<p>
-								The C standard library comes with a string library with some handy functions such as <code>strcmp()</code>, and <code>strlen()</code>. 
-								Many of the functions found in this file are relatively simple to implement on your own without the need of the string.h header and sometimes it may be a 
-								better idea to create your own version of some of these functions, but otherwise they can be handy to have.
-							</p>
-							<h3>Good Practices</h3>
-							<ul>
-								<li>Make sure your string arrays are at least one element larger than the string you're expecting because of the null terminator.</li>
-								<li>Sometimes it might be better to use regular char arrays rather than strings. They each have uses so it's worth thinking about how you're going to use the arrays in your program.</li>
-							</ul>
-							<h2>2. String Literals</h2>
-							<p>
-								String literals are probably easier to understand that string arrays. A string literal is created pretty much anytime you use the quotation marks. e.g.
-							</p>
-							<pre>
-								<code>printf("This is string literal");
-char string[100] = "This is also a string literal";</code>
-							</pre>
-							<p>
-								String literals are handy because they are <b>automatically null-terminated</b> and they are reserved in a special portion of memory apart from everything else in the program.
-							</p>
+							<h1>Files</h1>
+							<span class="image main"><img src="../images/files_h.jpg" alt="" /></span>
+
 						</div>
 					</div>
 

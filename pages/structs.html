@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Structures</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="../width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="../index.html" class="logo">
+									<span class="symbol"><img src="../images/C.png" alt="" /></span><span class="title">Home</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="intro_to_memory.html">Intro to Memory</a></li>
+							<li><a href="arrays.html">Arrays</a></li>
+							<li><a href="strings.html">Strings</a></li>
+							<li><a href="files.html">Files</a></li>
+							<li><a href="streams_and_buffers.html">Streams and Buffers</a></li>
+							<li><a href="dynamic_memory.html">Dynamic Memory</a></li>
+							<li><a href="pointers.html">Pointers</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Structs</h1>
+							<span class="image main"><img src="../images/structs_h.jpg" alt="" /></span>
+							<p>
+								So far we have been able to create individual variables and arrays that contain multiples of the same type of variable.
+								Sometimes it is handy to group different variables together because we use them to accomplish a certain task or they are related in some way. 
+								<b>Structs, or structures, are the way we create groups of variables in C</b>.
+							</p>
+							<p>
+								When we define a struct we are essentially creating a blueprint for how we want the variables to be grouped together. The variables that we add to our structs are often called <b>fields</b> or <b>members</b>. 
+								Let's look at an example:
+							</p>
+							<pre>
+								<code>struct data {
+  int a;
+  char b;
+  char string[20];
+};</code>
+							</pre>
+							<p>
+								We first start with the struct keyword followed by the name our of struct. In this case I've called it 'data' but we could call it anything we'd like. 
+								This is followed by the variables that we would like have grouped together. Notice how the <b>variables do not need to be the same type</b>. 
+								This makes structures a little more flexible for moving data around than arrays provided we know in advance what we're using the structure for.
+								Here's another example that may be familiar to people who have used the Unity or Godot game engines:
+							</p>
+							<pre>
+								<code>struct Vector3 // I intentionally changed the curly brace position here to demonstrate that both work.
+{
+  double x;
+  double y;
+  double z;
+}; // Notice that a semicolon is required at the end of a struct definition.</code>
+							</pre>
+							<p>Once we've created our blueprint we still need to create a variable which will contain our struct.</p>
+							<pre>
+								<code>struct Vector3 {
+  double x;
+  double y;
+  double z;
+}
+
+int main() {
+  struct Vector3 var;
+  /* ... */
+  return 0;
+}</code>
+							</pre>
+							<p>
+								The <code>struct Vector3 var</code> is where we created a variable called var (creative, I know) with a type of struct Vector3. Whenever we use structs in C we have to use the <code>struct</code> 
+								keyword to let the compiler know what's going on. That is, unless we use the <code>typedef</code> keyword, which I will cover in a moment.
+							</p>
+
+							<h3>Accessors</h3>
+							<p>
+								Once we've created our struct we need to be able to get access to those variables inside of it. 
+								To do this we use a special symbol called an accessor. In most languages the accessor is represented by the <code>.</code> character and this true of C. 
+								Let's see how it looks:
+							</p>
+							<pre>
+								<code>int main() {
+struct Vector3 var; // At this point all of the variables in var are
+		    // garbage values so we need to set them to something
+  var.x = 1.0;
+  var.y = 2.0;
+  var.z = 3.0;  
+
+  /* ... */
+  return 0;
+}</code>
+							</pre>
+							<p>
+								After doing this each of the struct's fields are set to their new values. When we access the variables using <code>.</code> we can interact with them as if they were ordinary variables.
+								It's also possible to have multiple variables as the same type of struct:
+							</p>
+							<pre>
+								<code>struct Vector3 var;   // struct 1
+struct Vector3 var_2; // struct 2
+
+var1.x = 150.0;
+var2.x = 10.0;</code>
+							</pre>
+							<p>We could even create an array of structs like we can with any other type: <code>struct Vector3 struct_arr[10];</code>. Here I created an array of 10 Vector3 structs. We can access them like so:</p>
+							<pre><code>struct_arr[2].x = 10.0; // Accessing the x field in the third Vector3 in the array.</code></pre>
+							<br>
+
+							<h4>The <code>-></code> Accessor</h4>
+							<p>
+								This only matters when we get to pointers but if we have a pointer to a struct, the <code>.</code> accessor will not work on the pointer. Instead we have to use <code>-></code>, like so:
+							</p>
+							<pre>
+								<code>struct Vector3 *p_var;
+p_var->x = 10.0;</code>
+							</pre>
+							<p>There is no particularly good reason for this apart from making it obvious that we're working with a pointer. Otherwise it's just a layer of confusion on top of structs.</p>
+							<h3>Structs and Functions</h3>
+							<p>Here is what it might look like to pass the Vector3 struct into a function:</p>
+							<pre>
+								<code>void printVector(struct Vector3 v) {
+  printf("%lf, %lf, %lf", v.x, v.y, v.z);
+}</code>
+							</pre>
+							<p>We can also return structs from functions:</p>
+							<pre>
+								<code>struct Vector3 normalized(struct Vector3 v) {
+  /* ... */
+  return new_vector3; 
+}</code>
+							</pre>
+							<p>
+								A handy feature of structs is that, unlike arrays, structs can be passed by value or by reference into a function.
+								It's worth noting that a struct containing an array, when passed by value, will copy the array rather than the reference. 
+								This is different to what typically happens with arrays.
+							</p>
+							<h2>Good Practices</h2>
+							<ul>
+								<li>Structs are really great for grouping data together that is used for a common process. In my examples above, a Vector3 is common in game engines to keeping track of an object's x, y and z position in space. Grouping them with a struct makes it much easier to keep track of them, especially when we're dealing with a lot of data.</li>
+								<li>It's often a good idea to define your structs in a header file so that each file that has that header is aware of what the struct should look like. (This will make more sense when we get to header files.)</li>
+							</ul>
+							<h1>Typdef</h1>
+							<p>
+								You may be wondering why I haven't used the <code>typedef</code> keyword yet, and why I've used the <code>struct</code> keyword more frequently that what we see in our lecture and lab material. 
+								That is because I wanted to demonstrate what the typedef keyword is actually doing for us.
+								Simply <code>typedef</code> creates a new type (similar to int, char, double, etc.) that the compiler is aware of. Typedefs can be used to redefine already existing types such as:
+							</p>
+							<pre>
+								<code>typedef unsigned int u_int; // u_int now represents the same type as an unsigned int
+			    // saving us from typing unsigned int all the time.
+typedef long int DWORD;     // DWORD is a common type used in the Win32 api but it's actually
+			    // just another name for a long int (32-bit integer)</code>
+							</pre>
+							<p>This is fine, but at a glance it can be tricky to read that typedef line. So instead there is a more idiomatic way that is easier and shorter to read and write:</p>
+							<pre>
+								<code>typedef struct Vector3 {
+  double x;
+  double y;
+  double z;
+} Vector3_t;</code>
+							</pre>
+							<p>
+								Here we can see the <code>typedef</code> keyword being used before the <code>struct</code> and the name of the new type is put just after the closing curly brace. Pretty handy!
+								Once we've done this <b>we can omit all the uses of the struct keyword</b> and instead use our newly defined type <code>Vector3_t</code>:
+							</p>
+							<pre>
+								<code>int main() {
+  Vector3_t var;
+  var.x = 10.0;
+
+  return 0;
+}
+
+Vector3_t normalized(Vector3_t v) {
+  /* ... */
+  return new_vector3;
+}</code>
+							</pre>
+							<h3>A Note About The _t Suffix</h3>
+							<p>
+								Guoquiang has suggested that we append _t to the end of our struct types. This is pretty old fashioned and tends to be frowned upon for various reason, 
+								but perhaps the most significant reason why people avoid this is because the POSIX implementation of C has reserved many types with the _t suffix and it's 
+								possible that our own types may clash with one of their names. If this happens it can be a tricky bug to track down, so in general it's better to not use _t.<br>
+								That said, it's required in our assignments so I recommend using them during the assignment.<br>
+								It is very common to find structs declared with the same struct and type name:
+							</p>
+							<pre>
+								<code>typedef struct Vector3 {
+  double x;
+  double y;
+  double z;
+} Vector3;</code>
+							</pre>
+						</div>
+					</div>
+
+				<!-- Footer --> <!--
+					<footer id="footer">
+						<div class="inner">
+							<section>
+								<h2>Get in touch</h2>
+								<form method="post" action="#">
+									<div class="fields">
+										<div class="field half">
+											<input type="text" name="name" id="name" placeholder="Name" />
+										</div>
+										<div class="field half">
+											<input type="email" name="email" id="email" placeholder="Email" />
+										</div>
+										<div class="field">
+											<textarea name="message" id="message" placeholder="Message"></textarea>
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send" class="primary" /></li>
+									</ul>
+								</form>
+							</section>
+							<section>
+								<h2>Follow</h2>
+								<ul class="icons">
+									<li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-500px"><span class="label">500px</span></a></li>
+									<li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
+									<li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+							<ul class="copyright">
+								<li>&copy; Pete-dv. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+				-->
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>

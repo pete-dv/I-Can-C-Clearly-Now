@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Arrays and Strings</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="../width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="../index.html" class="logo">
+									<span class="symbol"><img src="../images/C_logo.png" alt="" /></span><span class="title">Home</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="generic.html">Arrays</a></li>
+							<li><a href="generic.html">Strings</a></li>
+							<li><a href="generic.html">Structures</a></li>
+							<li><a href="elements.html">Files</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Intro to Memory</h1>
+							<span class="image main"><img src="../images/memory_h.jpg" alt="" /></span>
+							<p>C is a language that interacts directly with memory so understanding how memory works is crucial to effectively learn C. Firstly, lets quickly define a few concepts that are going to come up frequently:</p>
+							<h3>Allocation</h3>
+							<p>Allocation is the word we often use to when we ask C (or rather, when C asks the operating System) to reserve memory for us. This happens every time we create a variable and a different amount of memory is allocated depending on what data type we're using.
+								We'll see an example of what this looks like in a moment.
+							</p>
+							<h3>Stack vs. Heap</h3>
+							<p>This is something that's going to be much more important to understand when we start looking at dynamic memory management. In short, There are two places that C (and pretty much every other programming language) keeps track of memory, the <b>stack</b> and the <b>heap</b>.
+								Through weeks 1 to 5 we have only been using the stack. Each time we create a variable C allocates memory on the stack for us and when the variable falls out of scope C frees (deallocates) the memory on the stack for us.
+								The one big caveat with stack memory is that we need to know exactly how much of it we need at compile time. That's where the heap, dynamic memory and runtime memory allocation come in.
+							</p>
+								<pre>
+									<code>{
+  char c; // 1 Byte (8 bits) of memory is allocated onto the stack
+  int i; // 4 Bytes (16 bits) of memory is alloacted onto the stack (Sometimes int is 8 Bytes, 32 bits)
+}
+// After the closing brace, C frees the memory of these variables.
+// Conveniently, C also makes these variables fall out of scope so we don't use them and access bad memory.</code>
+							</pre>
+							<p>Let's see how this looks in practice. I think it's worth looking at what is actually happening to our memory to better understand what's actually happening.</p>
+							<div class="align-center">
+								<img src="../images/Arrays/Registers.png">
+							</div>
+							<p>This is what the registers in the memory addresses look like. In this case we can see groups of two hexadecimal numbers, each representing 1 byte of memory. Conveniently, the binary values in 8 bits fit into two hex values: 0000 0000 - 1111 1111 == 00 - FF == 0 - 255</p>
+							<p>Suppose the following declaration of our variable i that is a int type:</p>
+							<pre>
+								<code>int i;</code>
+							</pre>
+							<p>These are the 4 bytes that has been allocated to use the variable i. You can see that they are all just random values for now. The bytes that aren't underlined are positions in memory that can be used by other variables in our program, though, they are not related to our int variable.</p>
+							<div class="align-center"><img src="../images/Arrays/int_pre.png"></div>
+							<p>Let's try assigning a value to i.</p>
+							<pre>
+								<code>i = 5;</code>
+							</pre>
+							<div class="align-center"><img src="../images/Arrays/int_post.png"></div>
+							<p>The first byte changed to the number 5 and we can see by the red text that C also set the remaining bytes to 0.</p>
+							<p>This discussion on memory continues in <a href="arrays.html">Arrays.</a></p>
+					</div>
+
+
+
+
+
+				<!-- Footer --> <!--
+					<footer id="footer">
+						<div class="inner">
+							<section>
+								<h2>Get in touch</h2>
+								<form method="post" action="#">
+									<div class="fields">
+										<div class="field half">
+											<input type="text" name="name" id="name" placeholder="Name" />
+										</div>
+										<div class="field half">
+											<input type="email" name="email" id="email" placeholder="Email" />
+										</div>
+										<div class="field">
+											<textarea name="message" id="message" placeholder="Message"></textarea>
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send" class="primary" /></li>
+									</ul>
+								</form>
+							</section>
+							<section>
+								<h2>Follow</h2>
+								<ul class="icons">
+									<li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-500px"><span class="label">500px</span></a></li>
+									<li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
+									<li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+							<ul class="copyright">
+								<li>&copy; Pete-dv. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+				-->
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>

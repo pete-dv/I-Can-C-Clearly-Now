@@ -1,3 +1,7 @@
+a {
+    border: none;
+}
+
 .header-img {
 	width: 75%;
 }
@@ -5,6 +9,8 @@
 .auto-img {
 	width: 70%;
 }
+
+/* recent */
 
 .recent {
 	display: flex;

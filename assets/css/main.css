@@ -2753,7 +2753,7 @@ input, select, textarea {
 			}
 
 		* + .tiles {
-			margin-top: 2em;
+			/* margin-top: 2em; */
 		}
 
 		body.is-preload .tiles article {
@@ -2831,7 +2831,7 @@ input, select, textarea {
 /* Header */
 
 	#header {
-		padding: 8em 0 0.1em 0 ;
+		padding: 3em 0 0.1em 0 ;
 	}
 
 		#header .logo {
@@ -3331,10 +3331,5 @@ input, select, textarea {
 		}
 
 
-.header-img {
-	width: 75%;
-}
+/* Custom */
 
-.auto-img {
-	width: 70%;
-}

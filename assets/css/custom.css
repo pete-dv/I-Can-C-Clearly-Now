@@ -1,0 +1,110 @@
+.header-img {
+	width: 75%;
+}
+
+.auto-img {
+	width: 70%;
+}
+
+.recent {
+	display: flex;
+    margin-top: 20px;
+    margin-bottom: 2.5em;
+}
+
+.recent span {
+    white-space: nowrap;
+    flex: auto;
+    margin: auto;
+    padding-right: 10px;
+    margin-left: 20px;
+}
+
+.recent a {
+    border: none;
+    height: 100px;
+    margin-left: 10px;
+}
+
+
+.recent-container {
+    position: relative;
+    text-align: center;
+}
+
+.recent-container .style6 {
+    position: absolute;
+    top: 0;
+    border-radius: 4px;
+    height: 100px;
+    width: 100%;
+    transition: 0.5s ease;
+    background-color: #8499e7;
+    opacity: 0.75;
+}
+
+.recent-container:hover .style6 {
+        position: absolute;
+        top: 0;
+        border-radius: 4px;
+        height: 100px;
+        width: 100%;
+        transition: 0.5s ease;
+        background-color: black;
+        opacity: 0.5;
+        height: 120px;
+}
+
+.recent h2 {
+    position: relative;
+    color: white;
+    bottom: 75px;
+    pointer-events: none;
+    transition: 0.5s ease;
+}
+
+.recent-container:hover h2 {
+    bottom: 100px;
+    transition: 0.5s ease;
+}
+
+.recent-img {
+    position: relative;
+	width: 100%;
+	height: 100px;
+	object-fit: cover;
+	border-radius: 4px;
+    transition: 0.5s ease;
+}
+
+.recent-container:hover .recent-img {
+    height: 120px;
+    transition: 0.5s ease;
+}
+
+.recent-container p {
+    position: relative;
+    bottom: 130px;
+    color: white;
+    opacity: 0;
+    transition: 0.5s ease;
+}
+
+.recent-container:hover p {
+    opacity: 1;
+    transition: 0.5s ease;
+}
+
+@media screen and (max-width: 500px) {
+    .recent {
+        visibility: collapse;
+        width: 0;
+        height: 0;
+    }
+    .recent-img {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+}

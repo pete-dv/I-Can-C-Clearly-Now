@@ -10,6 +10,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="../width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/custom.css"/>
 		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
@@ -210,7 +211,7 @@ Vector3_t normalized(Vector3_t v) {
 							</pre>
 							<h3>A Note About The _t Suffix</h3>
 							<p>
-								Guoquiang has suggested that we append _t to the end of our struct types. This is pretty old fashioned and tends to be frowned upon for various reason, 
+								The lecture material has suggested that we append _t to the end of our struct types. This is pretty old fashioned and tends to be frowned upon for various reason, 
 								but perhaps the most significant reason why people avoid this is because the POSIX implementation of C has reserved many types with the _t suffix and it's 
 								possible that our own types may clash with one of their names. If this happens it can be a tricky bug to track down, so in general it's better to not use _t.<br>
 								That said, it's required in our assignments so I recommend using them during the assignment.<br>

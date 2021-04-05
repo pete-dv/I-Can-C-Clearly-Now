@@ -38,27 +38,28 @@ a {
     text-align: center;
 }
 
-.recent-container .style6 {
+.recent-container .tint {
     position: absolute;
     top: 0;
     border-radius: 4px;
     height: 100px;
     width: 100%;
     transition: 0.5s ease;
-    background-color: #8499e7;
     opacity: 0.75;
 }
 
-.recent-container:hover .style6 {
-        position: absolute;
-        top: 0;
-        border-radius: 4px;
-        height: 100px;
-        width: 100%;
+.recent-container:hover .tint {
         transition: 0.5s ease;
-        background-color: black;
-        opacity: 0.5;
+        opacity: 0.4;
         height: 120px;
+}
+
+.recent-container .style6 {
+    background-color: #8499e7;
+}
+
+.recent-container:hover .style6 {
+    background-color: black;
 }
 
 .recent h2 {

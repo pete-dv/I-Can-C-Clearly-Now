@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Pointers</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="../width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="../assets/css/custom.css"/>
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+
+		<meta property="og:image" content="https://pete-dv.github.io/I-Can-C-Clearly-Now/images/pointer_h.jpg"/>
+		<meta property="og:type" content="website"/>
+		<meta property="og:url" content="https://pete-dv.github.io/I-Can-C-Clearly-Now/pages/pointers.html"/>
+		<meta property="og:title" content="I Can C Clearly Now - Pointers"/>
+		<meta property="og:description" content="Getting to the point"/>
+
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ST91PCH17"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-1ST91PCH17');
+		</script>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="../index.html" class="logo">
+									<span class="symbol"><img src="../images/C.png" alt="" /></span><span class="title">Home</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="intro_to_memory.html">Intro to Memory</a></li>
+							<li><a href="arrays.html">Arrays</a></li>
+							<li><a href="strings.html">Strings</a></li>
+							<li><a href="structs.html">Structures</a></li>
+							<li><a href="files.html">Files</a></li>
+							<li><a href="streams_and_buffers.html">Streams and Buffers</a></li>
+							<li><a href="dynamic_memory.html">Dynamic Memory</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Arrays</h1>
+							<p><b>On this page:</b> <a href="#advantages">Advantages of Pointers</a>, <a href="operators">Operators</a>, <a href="#void">Void Pointers</a>, <a href="#good"> Good Practices</a></p>
+							<span class="image main"><img src="../images/pointer_h.jpg" alt="" /></span>
+							<p>
+								If you have read through the pages on <a href="arrays.html">Arrays</a> and <a href="files.html">Files</a> you will have noticed that pointers play an 
+								important role in both of those scenarios. But what is a pointer anyway?<br>
+								Put simply: <b>a pointer is an address to a location in memory.</b> When it all boils down, a pointer is simply a number, just like an int, but rather than holding a value it holds a memory address. <br>
+								In <a href="intro_to_memory.html">Intro to Memory</a> I demonstrated how when a value is stored in a variable its value is placed in a position in memory. Here's a quick recap:
+							</p>
+							<pre>
+								<code>int i = 5;</code>
+							</pre>
+							<div class="align-center"><a href="../images/Arrays/int_post.png" target="_blank"><img class="auto-img" src="../images/Arrays/int_post.png"></a></div>
+							<p>
+								The value for <code>i</code> is stored at memory address 0x00B5F70C (remember, this is just a hexadecimal number and could be represented as the decimal number: 11925260).
+								In this case we can see that the number 5 is placed in at this memory address. Behind the scenes C keeps track of the address, 0x00B5F70C, and we can just use the variable name <code>i</code> to access the value
+								stored at this address.
+							</p>
+							<p>
+								In many languages this is where the complexity stops, however, in C we are able to take advantage of direct access to memory addresses. When we do so, we are using pointers.
+							</p>
+
+							<h2 id="advantages">Advantages of Pointers</h2>
+							<ul>
+								<li><b>Arrays:</b> As mentioned previously, arrays are constructed with pointers by allocating a contiguous block of memory, storing the address to the first element, then using pointer arithmetic to access subsequent elements. (More on pointer arithmetic later)</li>
+								<li><b>Passing by Reference:</b> By using pointers, we are able to pass a reference (that is the memory address) of a variable into a function and therefore work directly on the memory location rather than working on a copy of the variable.</li>
+								<li><b>Dynamic Memory Allocation:</b> Without pointers we would not be able to take advantage of the heap where the lifetime of the memory is not dictated by the call stack and where memory need not be explicitely declared at compile time. See <a href="dynamic_memory.html">Dynamic Memory</a> for more info on the heap.</li>
+							</ul>
+							<h2 id="operators">Operators</h2>
+							<p>Pointers bring a few new operators into play. Let's see how to work with them.</p>
+							<ul>
+								<li>
+									<b>The Address-of Operator</b> - <code>&</code><br>
+									Continuing from the above example of <code>int i = 5;</code>, we can use the <code>&</code> operator to get the memory address of our variable i. If we wanted to print i's memory address
+									to the console we could do it like so:
+									<pre>
+										<code>int i = 5;
+printf("%p", &i); // prints 0x00B5F70C to the console</code>
+									</pre>
+									We also often use the <code>&</code> operator if we want to pass a reference of a variable into a function rather than copying the variable's value. A common example is the swap function:
+									<pre>
+										<code> int a = 5;
+int b = 2;
+swap(a, b); // This would not swap the values outside the function.
+swap(&a, &b) // This does swap the values outside the function because we are referencing the memory location</code>
+									</pre>
+								</li>
+								<li>
+									<b>The Indirection Operator</b> - <code>*</code><br>
+									The indirection operator, represented by the <code>*</code>, is responsible for two similar functions when it comes to pointers. <br>
+									Firstly, it is used when we're declaring a pointer variable:
+									<pre>
+										<code>int *i;</code>
+									</pre>
+									Here <code>i</code> is responsible for holding a memory address that points to a integer type. These memory addresses can be either <b>4 bytes (32-bits) or 8 bytes (64-bits)</b> long depending on the compiler.
+									A pointer is always 4 bytes/8 bytes long regardless of what type it is pointer to because the pointer variable simply holds the memory address of the first byte in memory, nothing more. <br>
+									The second use of the indirection operator comes when we want to <b>dereference</b> a pointer into its type:
+									<pre>
+										<code>int *i; // Declaring the pointer, as above.
+*i = 5; // Dereferencing the pointer and assigning the value 5.
+
+// We cannot directly assign the value of pointer without first dereferencing it.</code>
+									</pre>
+									This can get a little confusing so let's look at how we might implement the swap function:
+									<pre>
+										<code>void swap(int *a, int *b) {   // swap() takes two pointers as its parameters
+  int temp = *a;              // Notice how temp is not a pointer type here
+  *a = *b;
+  *b = temp;
+}
+
+// In this example we can imagine that the variable a = 0x0F827C24 and *a = 5
+// Likewise, b = 0x03427C24 and *b = 2
+// In order to swap the values we first have to access them by dereferencing the pointers with the * operator</code>
+									</pre>
+									Let's see how we can use both the <code>&</code> and <code>*</code> operators together:
+									<pre>
+										<code>int i = 5;     // Typical variable declaration and assignment
+int *ip = &i;  // Declaring an int pointer and assigning the memory address of i to it</code>
+									</pre>
+									We are also able to have pointers to pointers. We can represent this like so:
+									<pre>
+										<code>int i = 5;
+int *ip = &i;    // points to i
+int **ipp = ip;  // points to ip</code>
+									</pre>
+								</li>
+							</ul>
+							<h2 id="void">Void Pointers</h2>
+							<p>
+								A void pointer is a type of pointer that can point to any object. This comes in very handy if we write a function that may take any type or return any type.
+								Before we dive deeper into void pointers we first need to understand how typecasting works. By placing a type in parentheses, e.g. <code>(int)</code> before a variable we can ask
+								the C compiler to try and change the type of that variable:
+								<pre>
+									<code>int i = 5;
+double d = (double) i;</code>
+								</pre>
+								Here <code>i</code> is converted to a double and assigned to the variable <code>d</code>. <br>
+								This is especially useful when using void pointers:
+								<pre>
+									<code>char c = 'a';
+int i = 5;
+void *p;
+
+// Cast the void pointer to type char pointer
+p = (char *) &c;
+printf("%c", *p); // prints 'c'
+
+// Cast the void pointer to type int pointer
+p = (int *) &i;
+printf("%d", *p); // prints 5</code>
+								</pre>
+								Here, the variable <code>p</code> was able to point to both a char and and int allowing us to be flexible with our <code>p</code> pointer.
+							</p>
+							<h2 id="good">Good Practices</h2>
+							<ul>
+								<li>
+									When we are no longer using a pointer it is a good idea to assign it to NULL. If we try to access a null pointer we will get an error rather than accessing memory that may be invalid. Catching an error is
+									usually a better idea than letting one slip through with invalid memory.
+								</li>
+								<li>
+									Null checking is often a good idea when using pointers because many functions will return null pointers if they fail and we will want to handle that somehow. Null checking is quite simple:
+									<pre>
+										<code>int *p = (int *) malloc(1 * sizeof(int)); // This may return a null pointer if it fails
+
+if (p) {
+	/* Our pointer is not null */
+}
+else {
+	/* Our pointer is null */
+}</code>
+									</pre>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+				<!-- Footer --> <!--
+					<footer id="footer">
+						<div class="inner">
+							<section>
+								<h2>Get in touch</h2>
+								<form method="post" action="#">
+									<div class="fields">
+										<div class="field half">
+											<input type="text" name="name" id="name" placeholder="Name" />
+										</div>
+										<div class="field half">
+											<input type="email" name="email" id="email" placeholder="Email" />
+										</div>
+										<div class="field">
+											<textarea name="message" id="message" placeholder="Message"></textarea>
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send" class="primary" /></li>
+									</ul>
+								</form>
+							</section>
+							<section>
+								<h2>Follow</h2>
+								<ul class="icons">
+									<li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-500px"><span class="label">500px</span></a></li>
+									<li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
+									<li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+							<ul class="copyright">
+								<li>&copy; Pete-dv. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+				-->
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>

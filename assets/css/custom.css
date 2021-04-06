@@ -54,6 +54,22 @@ a {
         height: 120px;
 }
 
+.recent-container .style2 {
+    background-color: #7ecaf6;
+}
+
+.recent-container:hover .style2 {
+    background-color: black;
+}
+
+.recent-container .style3 {
+    background-color: #7bd0c1;
+}
+
+.recent-container:hover .style3 {
+    background-color: black;
+}
+
 .recent-container .style6 {
     background-color: #8499e7;
 }

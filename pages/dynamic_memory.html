@@ -1,0 +1,384 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Dynamic Memory</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="../width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="../assets/css/custom.css"/>
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+
+		<meta property="og:image" content="https://pete-dv.github.io/I-Can-C-Clearly-Now/images/dynamic_memory_h.jpg"/>
+		<meta property="og:type" content="website"/>
+		<meta property="og:url" content="https://pete-dv.github.io/I-Can-C-Clearly-Now/pages/dynamic_memory.html"/>
+		<meta property="og:title" content="I Can C Clearly Now - Pointers"/>
+		<meta property="og:description" content="Getting to the point"/>
+
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ST91PCH17"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-1ST91PCH17');
+		</script>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="../index.html" class="logo">
+									<span class="symbol"><img src="../images/C.png" alt="" /></span><span class="title">Home</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="intro_to_memory.html">Intro to Memory</a></li>
+							<li><a href="arrays.html">Arrays</a></li>
+							<li><a href="strings.html">Strings</a></li>
+							<li><a href="structs.html">Structures</a></li>
+							<li><a href="files.html">Files</a></li>
+							<li><a href="streams_and_buffers.html">Streams and Buffers</a></li>
+							<li><a href="pointers.html">Pointers</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Dynamic Memory</h1>
+							<p><b>On this page:</b> <a href="#stack">The Stack</a>, <a href="#auto">Automatic Lifetime and Scope</a>, <a href="#heap">The Heap</a>, <a href="#functions">Functions</a>, <a href="#good">Good Practices</a>, <a href="#demo">Demonstration</a></p>
+							<span class="image main"><img src="../images/dynamic_memory_h.jpg" alt="" /></span>
+							<p>In C, all memory that is allocated as a lifetime. There are a number of different lifetimes but we're going to focus on automatic lifetime and dynamic lifetime. We often refer to the places
+								where the automatic and dynamically allocated memory are stored as <b>the Stack</b> and <b>the Heap</b>, respectively. Let's begin by looking at the Stack.
+							</p>
+
+							<h2 id="stack">The Stack</h2>
+							<p>
+								'The Stack' is called as such because it is a stack data structure. A stack data structure works on the principle of <b>last in, first out</b> (LIFO) where the last element to be added to the stack
+								is the first to be removed. People often use the stack of plates metaphor as an example: you place a plate on top of the stack of plates and the top plate is the first one that you take back off. The terms, push and pop are often used to refer to adding
+								elements onto the stack and removing elements from the stack.
+							</p>
+							<div class="align-center"><a href="../images/Memory/Stack.png" target="_blank"><img class="auto-img" src="../images/Memory/Stack.png" alt=""></a></div>
+							<p>
+								The Stack (or more specifically, the Call Stack) is where most of the action happens in our program. The Stack is essentially an area in memory that keeps track of our function calls and variables. <br>
+								The following diagrams are abstractions of what
+								during a programs runtime and how it uses the Call Stack to manage memory:
+							</p>
+							<div class="align-center"><a href="../images/Memory/Stack1.png" target="_blank"><img class="auto-img" src="../images/Memory/Stack1.png" alt=""></a></div>
+							<p>
+								Here we can see a single function call, <code>main()</code> with one variable. Next, let's see what happens when we call another function from <code>main()</code>.
+							</p>
+							<div class="align-center"><a href="../images/Memory/Stack2.png" target="_blank"><img class="auto-img" src="../images/Memory/Stack2.png" alt=""></a></div>
+							<p>
+								This example is a little more complicated and demonstrates how values a copied into functions via parameters and how values can then be returned from a function into a value lower on the Stack.
+								Each time we call a function a new <b>stack frame</b> is added to the top of our call stack. Once the function finishes it is popped off the top of the call stack and any returned data is passed to the function below it on the stack.
+								A program can be tens, if not hundreds, of frames deep on the stack as functions call functions throughout the lifetime of our program.
+							</p>
+							<p>
+								This leads us to the next important aspect of the Stack: <b>Automatic Lifetime</b> and <b>Scope</b>.
+							</p>
+
+							<h2 id="auto">Automatic Lifetime and Scope</h2>
+							<p>
+								Strictly speaking, automatic lifetime and scope are two different aspects of the C language but they are tied pretty closely together so we're going to look at them at the same time.
+								Starting with scope, the concept is quite simple. Scope defines where a variable is able to accessed within our program. There are two main types of scope: <b>local scope</b> and <b>global scope</b>. We're going to focus on local scope for this example. <br>
+								Local scope is determined by the curly braces <code>{}</code> in our C program:
+							</p>
+							<pre>
+								<code>{
+  int a = 5;
+  int b = 10;
+  {
+    int c = a + b; // This is fine because we're still within the scope of the first set of curly brackets
+  }
+
+  printf("%d", c) // ERROR: This is wrong because the 'c' variable has fallen out of scope and we can no longer access it.
+}</code>
+							</pre>
+							<p>
+								Here we can see nested blocks of code that each of their own scopes. <code>a</code> and <code>b</code> live in the outer block and can be accessed inside of any nested blocks, whereas <code>c</code> lives only inside the nested block
+								and cannot be accessed outside of the nested curly brackets. Not only are we no longer able to use the <code>c</code> variable, in fact, the memory for <code>c</code> has been deallocated automatically for us at the end of the block, hence <b>automatic lifetime</b>. <br>
+								If you refer back to the stack example, each time a function or a block of code is popped off the top of our Call Stack, the memory for all the variables inside that frame are freed (deallocated).
+							</p>
+							<p>
+								One significant downside to the Stack is that we generally need to know exactly how much memory we're passing around on the Stack at compile time. This can be very limiting if we need to store variable amounts of data.
+								We are able to solve this by taking advantage of an area in memory called the Heap. Let's now take a look at how the Heap works.
+							</p>
+
+							<h2 id="heap">The Heap</h2>
+							<p>
+								The Heap, much like the stack, is a common data structure in programming, however, when we're referring to the heap on this page we'll mostly be referring to an area in memory apart from the stack that our program can use independent of
+								the Call Stack's automatic memory lifetime as described in <a href="#stack">The Stack</a>. <br> <br>
+								It is often a misconception that memory on the Heap is slower than the Stack. This can be true but memory speed is more often related to how 'hot', or recently used, memory is. Thus, heap allocated memory can be extremely quick to use if it is still
+								in our CPU caches or if the CPU doesn't have to look to hard to find it. <br> <br>
+								There are a few ways to allocate memory on the heap in C but we're going to focus on <code>malloc()</code>. (See <a href="#functions">Functions</a> for details on other dynamic memory functions). <br>
+								When we call <code>malloc()</code>, the Operating System allocates the amount of memory we asked for on the heap and returns a void pointer to the start of the memory block.
+							</p>
+							<div class="align-center"><a href="../images/Memory/Heap1.png" target="_blank"><img class="auto-img" src="../images/Memory/Heap1.png" alt=""></a></div>
+							<p>
+								Here we can see that we've asked <code>malloc()</code> to allocate a block of memory the size of one int (4 bytes) to the heap. Once we have our pointer to this block of memory on the heap we can dereference it using the <code>*</code> operator to access
+								and change the value.
+							</p>
+							<p>
+								There is one major issue with the above program though. <b>Any time we create memory on the Heap we must also free the memory when it is not needed</b>. Failing to free the memory on the heap is what results in <b>memory leaks</b>.
+								This sounds scary, and it can be bad when we're not careful, however, often it is as simple as pairing a <code>free()</code> function with any memory allocation function that we use. Let's fix the above example:
+								<pre>
+									<code>int main
+{
+  int *p = (int *)malloc(sizeof(int));
+
+  *p = 5;
+  free(p);
+}</code>
+								</pre>
+							</p>
+							<p>
+								Now we are not leaking any memory because we freed the allocated memory with the <code>free()</code> function. (Note: The OS cleans up any memory that our program was using when the program exits).
+							</p>
+
+							<h2 id="functions">Functions</h2>
+							<p>
+								There are a few important functions related to heap allocation in C that are included in the <code>stdlib.h</code> header file:
+							</p>
+							<ul>
+								<li>
+									<h3>malloc</h3>
+									<p>
+										<code>void *malloc(size_t size)</code><br>
+										malloc() returns a void pointer to the starting address of a block of memory on the heap that is size of <code>size</code>.
+									</p>
+									<h4>Parameters</h4>
+									<ul style="list-style-type: square;">
+										<li><code>size</code>: size of memory to be allocated.</li>
+									</ul>
+								</li>
+								<hr>
+								<li>
+									<h3>realloc</h3>
+									<p>
+										<code>void *realloc(void *p, size_t size)</code><br>
+										Changes the size of the block of memory that <code>p</code> points to.
+									</p>
+									<h4>Parameters</h4>
+									<ul style="list-style-type: square;">
+										<li><code>p</code>: Pointer to a block of heap memory.</li>
+										<li><code>size</code>: Size of memory to be reallocated to <code>p</code>.</li>
+									</ul>
+								</li>
+								<hr>
+								<li>
+									<h3>calloc</h3>
+									<p>
+										<code>void *calloc(size_t nobj, size_t size)</code><br>
+										Similar to malloc() but initializes all memory to 0. The paramter format is slightly different to malloc().
+									</p>
+									<h4>Parameters</h4>
+									<ul style="list-style-type: square;">
+										<li><code>nobj</code>: Number of blocks to allocate.</li>
+										<li><code>size</code>: Size of each memory block.</li>
+									</ul>
+								</li>
+								<hr>
+								<li>
+									<h3>free</h3>
+									<p>
+										<code>void free(void *p)</code><br>
+										free() frees any heap memory pointed to by <code>p</code>. <code>p</code> must be a pointer to memory previously allocated by <code>malloc()</code>, <code>realloc()</code>, or <code>calloc()</code>. <br>
+										free() does nothing if <code>p</code> is NULL.
+									</p>
+									<h4>Parameters</h4>
+									<ul style="list-style-type: square;">
+										<li><code>p</code>: pointer to previously allocated memory.</li>
+									</ul>
+								</li>
+								<hr>
+							</ul>
+
+							<h2 id="good">Good Practices</h2>
+							<ul>
+								<li>Always free memory that has been allocated to avoid memory leaks.</li>
+								<li>It's often a good idea to assign a freed pointer to NULL so as to not accidently access freed memory which could result in errors in your program.</li>
+							</ul>
+
+							<h2 id="demo">Demonstration - Resizable Array</h2>
+							<p>
+								A resizable array could be a handy concept for us to use in our programs. In fact, most high-level programming languages have some concept of a resizable array. In C++ it is called a Vector (std::Vector), 
+								in Java it is called an ArrayList, in C# it is called List&lt;T&gt;<br>
+								The concept is generally the same for each of these resizable arrays. The array has a starting capacity (number of elements it can contain) and when we reach that capacity the array is resized.
+								The manner in which the array is resized depends on the language and implementation but for simplicity, in the following example, we are going to double the capacity each time we need to resize.
+								We're also keeping it simple by making our array specifically hold int values. It is possible to create a generic array but doing so would add too much complexity for now.
+							</p>
+							<a href="../programs/resizableArray.c" class="button primary icon solid fa-download" download="ResizableArray.c">Resizable_Array.c</a>
+							<pre>
+								<code>#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+
+/* struct */
+typedef struct IntArray {
+	int capacity;     // total capacity of the array
+	int length;       // current number of elements in the array
+	int *data;        // pointer for our array
+} IntArray;
+
+/* Function delcarations */
+IntArray CreateArray();
+void Append(IntArray *arr, int n);
+void PrintArray(IntArray arr);
+void FreeArray(IntArray *arr);
+
+int main()
+{
+	IntArray arr = CreateArray();
+
+	printf("Capacity before adding elements: %d\n", arr.capacity); // This should be 10 after we first created the IntArray.
+
+	int i;
+	for (i = 1; i &lt;= 200; i++)
+	{
+		Append(&arr, i);
+	}
+
+	printf("Capacity after adding elements: %d\n", arr.capacity); // This should be 20 because we reached capacity and needed to resize the array.
+
+	PrintArray(arr);
+
+	FreeArray(&arr);
+
+
+	return 0;
+}
+
+/* Function definitions */
+IntArray CreateArray()
+{
+	IntArray arr;                      // Create our Array struct
+	arr.capacity = 10;                 // Arbitrarily set the capacity to 10. This could be anything we'd like
+	arr.length = 0;                    // There are no elements yet so length is 0.
+
+	arr.data = (int *) malloc(arr.capacity * sizeof(int));  // For an int it will be (10 * 4): 40 bytes allocated on the heap.
+	
+	return arr; // returning the address of the 
+}
+
+void Append(IntArray *arr, int n)
+{
+	if (arr->length >= arr->capacity)   // If we've reached the capacity of our previously allocated array
+	{
+		arr->capacity *= 2;  // Double the capacity
+		arr->data = (int *) realloc(arr->data, arr->capacity * sizeof(int));
+	}
+	arr->data[arr->length] = n;
+	arr->length++;
+}
+
+void PrintArray(IntArray arr)
+{
+	putchar('[');
+	if (arr.length == 0)
+	{
+		putchar(']');
+		putchar('\n');
+		return;
+	}
+
+	int i;
+	for (i = 0; i &gt; arr.length; i++)
+	{
+		if (i == arr.length - 1)
+		{
+			printf("%d]\n", arr.data[i]);
+		}
+		else
+		{
+			printf("%d, ", arr.data[i]);
+		}
+	}
+}
+
+void FreeArray(IntArray *arr)
+{
+	free(arr->data);  // Frees the data previously allocated
+	data->data = NULL // Set the pointer to null so as to not access reclaimed memory
+}</code>
+							</pre>
+						</div>
+					</div>
+
+				<!-- Footer --> <!--
+					<footer id="footer">
+						<div class="inner">
+							<section>
+								<h2>Get in touch</h2>
+								<form method="post" action="#">
+									<div class="fields">
+										<div class="field half">
+											<input type="text" name="name" id="name" placeholder="Name" />
+										</div>
+										<div class="field half">
+											<input type="email" name="email" id="email" placeholder="Email" />
+										</div>
+										<div class="field">
+											<textarea name="message" id="message" placeholder="Message"></textarea>
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send" class="primary" /></li>
+									</ul>
+								</form>
+							</section>
+							<section>
+								<h2>Follow</h2>
+								<ul class="icons">
+									<li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-500px"><span class="label">500px</span></a></li>
+									<li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
+									<li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+							<ul class="copyright">
+								<li>&copy; Pete-dv. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+				-->
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>

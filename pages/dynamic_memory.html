@@ -87,8 +87,8 @@
 							<div class="align-center"><a href="../images/Memory/Stack.png" target="_blank"><img class="auto-img" src="../images/Memory/Stack.png" alt=""></a></div>
 							<p>
 								The Stack (or more specifically, the Call Stack) is where most of the action happens in our program. The Stack is essentially an area in memory that keeps track of our function calls and variables. <br>
-								The following diagrams are abstractions of what
-								during a programs runtime and how it uses the Call Stack to manage memory:
+								The following diagrams are abstractions of what happens
+								during a program's runtime and how it uses the Call Stack to manage memory:
 							</p>
 							<div class="align-center"><a href="../images/Memory/Stack1.png" target="_blank"><img class="auto-img" src="../images/Memory/Stack1.png" alt=""></a></div>
 							<p>
@@ -98,7 +98,7 @@
 							<p>
 								This example is a little more complicated and demonstrates how values a copied into functions via parameters and how values can then be returned from a function into a value lower on the Stack.
 								Each time we call a function a new <b>stack frame</b> is added to the top of our call stack. Once the function finishes it is popped off the top of the call stack and any returned data is passed to the function below it on the stack.
-								A program can be tens, if not hundreds, of frames deep on the stack as functions call functions throughout the lifetime of our program.
+								A program can be tens, if not hundreds, of frames deep on the stack as functions call other functions throughout the lifetime of our program.
 							</p>
 							<p>
 								This leads us to the next important aspect of the Stack: <b>Automatic Lifetime</b> and <b>Scope</b>.
@@ -123,7 +123,7 @@
 							</pre>
 							<p>
 								Here we can see nested blocks of code that each of their own scopes. <code>a</code> and <code>b</code> live in the outer block and can be accessed inside of any nested blocks, whereas <code>c</code> lives only inside the nested block
-								and cannot be accessed outside of the nested curly brackets. Not only are we no longer able to use the <code>c</code> variable, in fact, the memory for <code>c</code> has been deallocated automatically for us at the end of the block, hence <b>automatic lifetime</b>. <br>
+								and cannot be accessed outside of the nested curly brackets. After closing the nested block, not only are we no longer able to use the <code>c</code> variable, in fact, the memory for <code>c</code> has been deallocated automatically for us at the end of the block, hence <b>automatic lifetime</b>. <br>
 								If you refer back to the stack example, each time a function or a block of code is popped off the top of our Call Stack, the memory for all the variables inside that frame are freed (deallocated).
 							</p>
 							<p>
@@ -135,7 +135,7 @@
 							<p>
 								The Heap, much like the stack, is a common data structure in programming, however, when we're referring to the heap on this page we'll mostly be referring to an area in memory apart from the stack that our program can use independent of
 								the Call Stack's automatic memory lifetime as described in <a href="#stack">The Stack</a>. <br> <br>
-								It is often a misconception that memory on the Heap is slower than the Stack. This can be true but memory speed is more often related to how 'hot', or recently used, memory is. Thus, heap allocated memory can be extremely quick to use if it is still
+								It is often a misconception that memory on the Heap is slower than the Stack. This can be true, but, memory speed is more often related to how 'hot', or recently used, memory is. Thus, heap allocated memory can be extremely quick to use if it is still
 								in our CPU caches or if the CPU doesn't have to look to hard to find it. <br> <br>
 								There are a few ways to allocate memory on the heap in C but we're going to focus on <code>malloc()</code>. (See <a href="#functions">Functions</a> for details on other dynamic memory functions). <br>
 								When we call <code>malloc()</code>, the Operating System allocates the amount of memory we asked for on the heap and returns a void pointer to the start of the memory block.
@@ -146,7 +146,7 @@
 								and change the value.
 							</p>
 							<p>
-								There is one major issue with the above program though. <b>Any time we create memory on the Heap we must also free the memory when it is not needed</b>. Failing to free the memory on the heap is what results in <b>memory leaks</b>.
+								There is one major issue with the above program though. <b>Any time we create memory on the Heap we must also free the memory when it is no longer needed</b>. Failing to free the memory on the heap is what results in <b>memory leaks</b>.
 								This sounds scary, and it can be bad when we're not careful, however, often it is as simple as pairing a <code>free()</code> function with any memory allocation function that we use. Let's fix the above example:
 								<pre>
 									<code>int main
@@ -259,7 +259,7 @@ int main()
   printf("Capacity before adding elements: %d\n", arr.capacity); // This should be 10 after we first created the IntArray.
 
   int i;
-  for (i = 1; i &lt;= 200; i++)
+  for (i = 1; i &lt;= 15; i++)
   {
   	Append(&arr, i);
   }

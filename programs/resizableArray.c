@@ -21,7 +21,7 @@ int main()
     printf("Capacity before adding elements: %d\n", arr.capacity); // This should be 10 after we first created the IntArray.
 
     int i;
-    for (i = 1; i <= 200; i++)
+    for (i = 1; i <= 15; i++)
     {
         Append(&arr, i);
     }

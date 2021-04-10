@@ -97,7 +97,7 @@
 							<div class="align-center"><a href="../images/Memory/Stack2.png" target="_blank"><img class="auto-img" src="../images/Memory/Stack2.png" alt=""></a></div>
 							<p>
 								This example is a little more complicated and demonstrates how values a copied into functions via parameters and how values can then be returned from a function into a value lower on the Stack.
-								Each time we call a function a new <b>stack frame</b> is added to the top of our call stack. Once the function finishes it is popped off the top of the call stack and any returned data is passed to the function below it on the stack.
+								Each time we call a function, a new <b>stack frame</b> is added to the top of our call stack. Once the function finishes it is popped off the top of the call stack and any returned data is passed to the function below it on the stack.
 								A program can be tens, if not hundreds, of frames deep on the stack as functions call other functions throughout the lifetime of our program.
 							</p>
 							<p>
@@ -107,7 +107,7 @@
 							<h2 id="auto">Automatic Lifetime and Scope</h2>
 							<p>
 								Strictly speaking, automatic lifetime and scope are two different aspects of the C language but they are tied pretty closely together so we're going to look at them at the same time.
-								Starting with scope, the concept is quite simple. Scope defines where a variable is able to accessed within our program. There are two main types of scope: <b>local scope</b> and <b>global scope</b>. We're going to focus on local scope for this example. <br>
+								Starting with scope, the concept is quite simple. Scope defines where a variable is able to be accessed within our program. There are two main types of scope: <b>local scope</b> and <b>global scope</b>. We're going to focus on local scope for this example. <br>
 								Local scope is determined by the curly braces <code>{}</code> in our C program:
 							</p>
 							<pre>
@@ -284,7 +284,7 @@ IntArray CreateArray()
 
   arr.data = (int *) malloc(arr.capacity * sizeof(int));  // For an int it will be (10 * 4): 40 bytes allocated on the heap.
 	
-  return arr; // returning the address of the 
+  return arr; // returning a copy of the IntArray struct
 }
 
 void Append(IntArray *arr, int n)

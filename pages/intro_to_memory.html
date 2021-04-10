@@ -78,9 +78,9 @@
 								We'll see an example of what this looks like in a moment.
 							</p>
 							<h3>Stack vs. Heap</h3>
-							<p>This is something that's going to be much more important to understand when we start looking at dynamic memory management. In short, There are two places that C (and pretty much every other programming language) keeps track of memory, the <b>stack</b> and the <b>heap</b>.
+							<p>This is something that's going to be much more important to understand when we start looking at dynamic memory management. In short, There are two main places that C (and pretty much every other programming language) keeps track of memory, the <b>stack</b> and the <b>heap</b>.
 								Through weeks 1 to 5 we have only been using the stack. Each time we create a variable C allocates memory on the stack for us and when the variable falls out of scope C frees (deallocates) the memory on the stack for us.
-								The one big caveat with stack memory is that we need to know exactly how much of it we need at compile time. That's where the heap, dynamic memory and runtime memory allocation come in.
+								The one big caveat with stack memory is that we need to know exactly how much of it we need at compile time. That's where the heap, dynamic memory and runtime memory allocation come in. See <a href="dynamic_memory.html">Dynamic Memory</a>
 							</p>
 								<pre>
 									<code>{

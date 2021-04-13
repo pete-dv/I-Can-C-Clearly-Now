@@ -295,9 +295,9 @@ void Append(IntArray *arr, int n)
 	newArr.capacity = arr->capacity * 2; // Double the capacity for our newly allocated array.
 
 	newArr.data = (int *) realloc(arr->data, newArr.capacity * sizeof(int)); // Realloc returns a pointer to a new block of heap memory or NULL if it fails.
-																			 // If it fails, the old block of memory is not freed and we want our arr pointer to still point
-																			 // to that block of memory. This is why we create the temporary newArr, in case realloc returns NULL.
-																			 
+										 // If it fails, the old block of memory is not freed and we want our arr pointer to still point
+										 // to that block of memory. This is why we create the temporary newArr, in case realloc returns NULL.
+
 	if (newArr.data) // If realloc was successful we will change our initial array data to point to our newly allocated memory.
 	                 // Realloc will have freed the old block of memory for us and we can safetly take ownership of the new block
 	{
@@ -305,7 +305,7 @@ void Append(IntArray *arr, int n)
 		arr->capacity = newArr.capacity;
 	}
 	else // If realloc fails to allocate new memory for us then the old block is not freed automatically. In this case we are keeping the old block in case
-		 // we want to continue using it, however, you may want to free the old block at this point.
+	     // we want to continue using it, however, you may want to free the old block at this point.
 	{
 		fputs("Error Reallocating Memory.\n", stderr);
 		return;

@@ -86,5 +86,4 @@ void PrintArray(IntArray arr)
 void FreeArray(IntArray *arr)
 {
     free(arr->data);  // Frees the data previously allocated
-    arr->data = NULL; // Set the heap pointer to NULL so as to not accidently access reclaimed memory
 }

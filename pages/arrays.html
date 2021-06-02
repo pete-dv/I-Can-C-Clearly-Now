@@ -110,8 +110,7 @@
 							<p>
 								are practically the same. One takes an array as it's argument and the other takes a pointer but as I 
 								mentioned that are effectively the same when we're using arrays so both are fine. The latter is more 
-								transparent with what is actually happening but the former makes it easier to see that we're working with an array. 
-								Both are fine.
+								transparent with what is actually happening but the former makes it easier to see that we're working with an array.
 							</p>
 							<p>
 								Because Arrays are not first-class citizens we cannot return arrays from functions in C. There are two options 
@@ -124,8 +123,9 @@
 
 							<h2 id="good">Good Practices</h2>
 							<ul>
-								<li>Because arrays in C are glorified pointers the infomation they contain are the memory address of the first element and the type of the array. The array has no idea how big it is so when we're passing an array into a function so it is often a good idea to <b>pass the size of the array</b> into a function along with the array.</li>
-								<li>Use the <code>const</code> keyword (short of constant) to indicate that an array, or any variable for that matter, will not be changed. This is especially useful in functions when we don't what to accidently modify an array. It doesn't actually change anything but it helps the compiler catch our mistakes which is always handy!</li>
+								<li>Because arrays in C are glorified pointers the infomation they contain are the memory address of the first element and the type of the array. The array has no idea how big it is when we're passing an array into a function so it is often a good idea to <b>pass the size of the array</b> into a function along with the array.</li>
+								<li>Use the <code>const</code> keyword (short for constant) to indicate that an array, or any variable for that matter, will not be changed. This is especially useful in functions when we don't what to accidently modify an array. It doesn't actually change anything but it helps the compiler catch our mistakes which is always handy!
+								Note that C cannot make any guarantees about <code>const</code> values because of aliasing.</li>
 							</ul>
 
 							<h2>Going Deeper</h2>
@@ -136,7 +136,7 @@ int iArray[10]; // 10 elements, 40 byte
 //
 chArray[5] = 'a'; // Add 5 to the address of chArray and change the value to 'a'
 *(chArray + 5); = 'a' // Equivalent to the line above but uses pointer arithmetic
-iArray[5] = 12; // Add 20 to the address of iArray and change the value to 12
+iArray[5] = 12; // Add 20 to the address of iArray and change the value to 12. Note that 5 * 4 = 20.
 *(iArray + 5) = 12; // Again, this is equivalent to the line above.</code>
 							</pre>
 							<p>The char array arithmetic seems to make sense. Characters are 1 byte each, add 5 and we should have move 5 bytes, and this is true.
